@@ -1,0 +1,23 @@
+image: "109010/ric-xapp-intent:0.1"
+imagePullPolicy: IfNotPresent
+imagePullSecrets: []  # e.g., ["regcred"] if private
+
+nameOverride: "ric-xapp-intent"
+
+service:
+  type: ClusterIP
+  port: 8080        # REST
+  nodePort: 30080   # if you switch to NodePort
+  rmrPort: 4560
+
+rmr:
+  routeTableConfigMap: "rmr-route-table"
+  routeTablePath: "/opt/route_table/rt.json"
+
+resources: {}
+livenessProbe:
+  httpGet: { path: /health, port: http }
+  initialDelaySeconds: 10
+readinessProbe:
+  httpGet: { path: /health, port: http }
+  initialDelaySeconds: 5

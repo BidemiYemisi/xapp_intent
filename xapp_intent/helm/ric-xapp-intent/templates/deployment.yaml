@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "xapp.fullname" . }}
+  labels: { app: {{ include "xapp.name" . }} }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: {{ include "xapp.name" . }} } }
+  template:
+    metadata: { labels: { app: {{ include "xapp.name" . }} } }
+    spec:
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.imagePullSecrets }}
+        - name: {{ . | quote }}
+      {{- end }}
+      {{- end }}
+      containers:
+      - name: xapp
+        image: {{ .Values.image | quote }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        env:
+          - name: RMR_SEED_RT
+            value: {{ .Values.rmr.routeTablePath | quote }}
+        ports:
+          - name: http
+            containerPort: {{ .Values.service.port }}
+          - name: rmr
+            containerPort: {{ .Values.service.rmrPort }}
+        volumeMounts:
+          - name: rmr-rt
+            mountPath: /opt/route_table
+        livenessProbe:
+          {{- toYaml .Values.livenessProbe | nindent 10 }}
+        readinessProbe:
+          {{- toYaml .Values.readinessProbe | nindent 10 }}
+      volumes:
+        - name: rmr-rt
+          configMap:
+            name: {{ .Values.rmr.routeTableConfigMap }}

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: ric-xapp-intent
+description: Intent xApp (REST -> RMR 30001)
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
