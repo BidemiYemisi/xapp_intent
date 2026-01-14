@@ -1,2 +1,2 @@
-ricxappframe==3.2.2
+ricxappframe>=1.1.1,<2.3.0
 Flask

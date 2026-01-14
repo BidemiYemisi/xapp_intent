@@ -1,0 +1,19 @@
+{
+  "name": "ric-xapp-intent",
+  "version": "0.1.0",
+  "description": "Intent xApp (REST -> RMR 30001)",
+  "container": {
+    "image": "109010/ric-xapp-intent:0.1"
+  },
+  "helm": {
+    "chart": {
+      "name": "ric-xapp-intent",
+      "version": "0.1.0"
+    }
+  },
+  "rmr": {
+    "port": 4560
+  },
+  "provides": [ "intent-rest" ],
+  "consumes": []
+}

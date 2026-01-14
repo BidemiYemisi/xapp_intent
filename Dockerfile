@@ -6,7 +6,8 @@ WORKDIR /app
 COPY --from=nexus3.o-ran-sc.org:10002/o-ran-sc/bldr-alpine3-rmr:4.0.5 /usr/local/lib64/librmr* /usr/local/lib64/
 
 COPY --from=nexus3.o-ran-sc.org:10002/o-ran-sc/bldr-alpine3-rmr:4.0.5 /usr/local/bin/rmr* /usr/local/bin/
-ENV LD_LIBRARY_PATH=/usr/local/lib/:/usr/local/lib64
+ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
+
 
 
 # sdl needs gcc
